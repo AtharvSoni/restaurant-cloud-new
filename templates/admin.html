@@ -4,38 +4,15 @@
   <title>Menu Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-      background: #f9f9f9;
-    }
-    .dish-card {
-      background: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    img {
-      width: 100px;
-      border-radius: 10px;
-    }
-    button {
-      margin-top: 10px;
-      padding: 5px 10px;
-    }
-    .form-container {
-      background: #efefef;
-      padding: 10px;
-      margin-top: 20px;
-      border-radius: 10px;
-    }
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    .dish-card { background: #fff; padding: 15px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    img { width: 100px; border-radius: 10px; }
+    button { margin-top: 10px; padding: 5px 10px; }
+    .form-container { background: #efefef; padding: 10px; margin-top: 20px; border-radius: 10px; }
   </style>
 </head>
 <body>
-
   <h1>Menu Admin Panel</h1>
-
   <form action="/api/upload" method="post" enctype="multipart/form-data" class="form-container">
     <h3>Add New Dish</h3>
     <input type="text" name="name" placeholder="Dish Name" required><br><br>
@@ -44,21 +21,12 @@
     <input type="file" name="image" required><br><br>
     <button type="submit">Upload</button>
   </form>
-
   <div id="menuList"></div>
-
   <script>
     let menu = [];
-
     function loadMenu() {
-      fetch('/api/menu')
-        .then(res => res.json())
-        .then(data => {
-          menu = data;
-          showMenu();
-        });
+      fetch('/api/menu').then(res => res.json()).then(data => { menu = data; showMenu(); });
     }
-
     function showMenu() {
       const list = document.getElementById('menuList');
       list.innerHTML = '';
@@ -67,9 +35,7 @@
         div.className = 'dish-card';
         div.innerHTML = `
           <img src="/static/${item.image}"><br>
-          <strong>${item.name}</strong><br>
-          ${item.description}<br>
-          ${item.price}<br>
+          <strong>${item.name}</strong><br>${item.description}<br>${item.price}<br>
           <button onclick="editDish(${index})">✏️ Edit</button>
           <button onclick="deleteDish(${index})">🗑️ Delete</button>
           <div id="edit-${index}" style="display:none; margin-top:10px;">
@@ -77,16 +43,11 @@
             <input type="text" id="desc-${index}" value="${item.description}"><br>
             <input type="text" id="price-${index}" value="${item.price}"><br>
             <button onclick="saveEdit(${index})">Save</button>
-          </div>
-        `;
+          </div>`;
         list.appendChild(div);
       });
     }
-
-    function editDish(i) {
-      document.getElementById(`edit-${i}`).style.display = 'block';
-    }
-
+    function editDish(i) { document.getElementById(`edit-${i}`).style.display = 'block'; }
     function saveEdit(i) {
       fetch(`/api/edit/${i}`, {
         method: 'POST',
@@ -98,14 +59,11 @@
         })
       }).then(() => loadMenu());
     }
-
     function deleteDish(i) {
       if (confirm("Delete this dish?")) {
-        fetch(`/api/delete/${i}`, { method: 'DELETE' })
-          .then(() => loadMenu());
+        fetch(`/api/delete/${i}`, { method: 'DELETE' }).then(() => loadMenu());
       }
     }
-
     loadMenu();
   </script>
 </body>

@@ -1,1 +1,8 @@
-[{"name": "Margherita Pizza", "description": "Classic tomato and mozzarella pizza.", "price": "\u00e2\u201a\u00b9299", "image": "uploads/pizza1.jpg"}, {"name": "Pizza", "description": "Cheeze", "price": "500", "image": "uploads/pizza.webp"}, {"name": "Pasta", "description": "mast", "price": "500", "image": "uploads/pasts.jpg"}]
+[
+  {
+    "name": "Sample Dish",
+    "description": "This is a test item.",
+    "price": "₹199",
+    "image": "uploads/sample.jpg"
+  }
+]

@@ -7,7 +7,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 MENU_FILE = 'menu.json'
 
-# Ensure upload folder exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 def load_menu():
@@ -45,7 +44,6 @@ def upload_menu_item():
         "image": f"uploads/{filename}"
     })
     save_menu(menu)
-
     return jsonify({"status": "added"}), 200
 
 @app.route('/admin')
